@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.newshub.api.Client;
 import com.example.newshub.api.NewsTitleApi;
 import com.example.newshub.model.RequestInformation;
+import com.example.newshub.utils.NetworkAvailability;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         newsTitleApi = Client.getRetrofit().create(NewsTitleApi.class);
+
+        if (NetworkAvailability.isNetworkAvailable(MainActivity.this)){
+            Log.d("Network", "is available");
+        }
+        else {
+            Log.d("Network", "is not available");
+        }
 
         getResults();
 
