@@ -15,7 +15,7 @@ public class Response {
     private long totalResults;
     @SerializedName("articles")
     @Expose
-    private List<Article> articles = new ArrayList<Article>();
+    private ArrayList<Article> articles = new ArrayList<Article>();
 
     /**
      * No args constructor for use in serialization
@@ -30,7 +30,7 @@ public class Response {
      * @param totalResults
      * @param status
      */
-    public Response(String status, long totalResults, List<Article> articles) {
+    public Response(String status, long totalResults, ArrayList<Article> articles) {
         super();
         this.status = status;
         this.totalResults = totalResults;
@@ -67,11 +67,11 @@ public class Response {
         return articles;
     }
 
-    public void setArticles(List<Article> articles) {
+    public void setArticles(ArrayList<Article> articles) {
         this.articles = articles;
     }
 
-    public Response withArticles(List<Article> articles) {
+    public Response withArticles(ArrayList<Article> articles) {
         this.articles = articles;
         return this;
     }
