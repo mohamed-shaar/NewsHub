@@ -23,20 +23,20 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String category = "technology";
+    /*private String category = "technology";
     private String apiKey = BuildConfig.News_Api_Key;
-    private NewsTitleApi newsTitleApi;
+    private NewsTitleApi newsTitleApi;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        newsTitleApi = Client.getRetrofit().create(NewsTitleApi.class);
+        //newsTitleApi = Client.getRetrofit().create(NewsTitleApi.class);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NewsFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NewsFragment(this)).commit();
 
         if (NetworkAvailability.isNetworkAvailable(MainActivity.this)){
             Log.d("Network", "is available");
@@ -45,11 +45,11 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Network", "is not available");
         }
 
-        getResults();
+        //getResults();
 
     }
 
-    private void getResults(){
+    /*private void getResults(){
         Call<RequestInformation> call = newsTitleApi.getNewsTitles(category, apiKey);
         call.enqueue(new Callback<RequestInformation>() {
             @Override
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Failure in request: ", t.getMessage());
             }
         });
-    }
+    }*/
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     Fragment selected = null;
                     switch (menuItem.getItemId()){
                         case R.id.nav_news:
-                            selected = new NewsFragment();
+                            selected = new NewsFragment(MainActivity.this);
                             break;
                         case R.id.nav_favorites:
                             selected = new FavoritesFragment();
