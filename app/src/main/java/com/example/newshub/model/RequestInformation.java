@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Response {
+public class RequestInformation {
     @SerializedName("status")
     @Expose
     private String status;
@@ -21,7 +21,7 @@ public class Response {
      * No args constructor for use in serialization
      *
      */
-    public Response() {
+    public RequestInformation() {
     }
 
     /**
@@ -30,7 +30,7 @@ public class Response {
      * @param totalResults
      * @param status
      */
-    public Response(String status, long totalResults, ArrayList<Article> articles) {
+    public RequestInformation(String status, long totalResults, ArrayList<Article> articles) {
         super();
         this.status = status;
         this.totalResults = totalResults;
@@ -45,7 +45,7 @@ public class Response {
         this.status = status;
     }
 
-    public Response withStatus(String status) {
+    public RequestInformation withStatus(String status) {
         this.status = status;
         return this;
     }
@@ -58,7 +58,7 @@ public class Response {
         this.totalResults = totalResults;
     }
 
-    public Response withTotalResults(long totalResults) {
+    public RequestInformation withTotalResults(long totalResults) {
         this.totalResults = totalResults;
         return this;
     }
@@ -71,7 +71,7 @@ public class Response {
         this.articles = articles;
     }
 
-    public Response withArticles(ArrayList<Article> articles) {
+    public RequestInformation withArticles(ArrayList<Article> articles) {
         this.articles = articles;
         return this;
     }
