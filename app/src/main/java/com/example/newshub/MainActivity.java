@@ -2,13 +2,20 @@ package com.example.newshub;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.newshub.api.Client;
 import com.example.newshub.api.NewsTitleApi;
+import com.example.newshub.fragments.AccountFragment;
+import com.example.newshub.fragments.FavoritesFragment;
+import com.example.newshub.fragments.NewsFragment;
 import com.example.newshub.model.RequestInformation;
 import com.example.newshub.utils.NetworkAvailability;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         newsTitleApi = Client.getRetrofit().create(NewsTitleApi.class);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NewsFragment()).commit();
 
         if (NetworkAvailability.isNetworkAvailable(MainActivity.this)){
             Log.d("Network", "is available");
@@ -60,6 +71,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    Fragment selected = null;
+                    switch (menuItem.getItemId()){
+                        case R.id.nav_news:
+                            selected = new NewsFragment();
+                            break;
+                        case R.id.nav_favorites:
+                            selected = new FavoritesFragment();
+                            break;
+                        case R.id.nav_account:
+                            selected = new AccountFragment();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selected).commit();
+                    return true;
+                }
+            };
 
 }
