@@ -1,6 +1,8 @@
 package com.example.newshub;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.newshub.model.Article;
+import com.example.newshub.room.NewsViewModel;
 import com.squareup.picasso.Picasso;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -20,6 +23,8 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView tv_details_source;
     private TextView tv_details_content;
     private TextView tv_details_link;
+
+    private NewsViewModel newsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,9 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
+
 
 
     }
