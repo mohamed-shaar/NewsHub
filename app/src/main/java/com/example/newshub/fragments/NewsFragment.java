@@ -75,6 +75,20 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemSelected
         newsAdapter = new NewsAdapter(articles, context);
         recyclerView.setAdapter(newsAdapter);
 
+        refreshLayout = view.findViewById(R.id.swipe_refresh);
+        refreshLayout.setColorSchemeColors(getResources().getColor(
+                android.R.color.holo_blue_dark)
+                , getResources().getColor(android.R.color.holo_blue_light)
+                , getResources().getColor(android.R.color.holo_green_light)
+                , getResources().getColor(android.R.color.holo_green_light));
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshLayout.setRefreshing(true);
+                getResults();
+            }
+        });
+
         return view;
     }
 
