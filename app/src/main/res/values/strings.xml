@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">NewsHub</string>
+    <string name="news">News</string>
+    <string name="favorites">Favorites</string>
+    <string name="account">Account</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title">Title</string>
+    <string name="an_image_included_with_the_news_article">An image included with the news article</string>
+    <string name="date">Date</string>
+    <string name="article_object">article_object</string>
+    <string name="source_name">source_name</string>
+    <string name="source">Source</string>
+    <string name="placeholder_text">Placeholder Text</string>
+    <string name="to_continue_reading">To continue reading:</string>
+    <string name="link_here">Link Here</string>
+    <string-array name="category">
+        <item>business</item>
+        <item>entertainment</item>
+        <item>general</item>
+        <item>health</item>
+        <item>science</item>
+        <item>sports</item>
+        <item>technology</item>
+    </string-array>
 </resources>
