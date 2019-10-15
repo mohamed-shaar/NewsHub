@@ -7,11 +7,13 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class NewsViewModel extends AndroidViewModel {
 
     private NewsRepository newsRepository;
-    private LiveData<ArrayList<NewsItem>> allNewsItems;
+    private LiveData<List<NewsItem>> allNewsItems;
     public NewsViewModel(@NonNull Application application) {
         super(application);
         newsRepository = new NewsRepository(application);
@@ -24,5 +26,7 @@ public class NewsViewModel extends AndroidViewModel {
 
     public void deleteAll(){newsRepository.deleteAllNewsItems();}
 
-    public LiveData<ArrayList<NewsItem>> getAllNewsItems() {return allNewsItems;}
+    public NewsItem queryByUrl(NewsItem newsItem) throws ExecutionException, InterruptedException { return newsRepository.queryByUrl(newsItem);}
+
+    public LiveData<List<NewsItem>> getAllNewsItems() {return allNewsItems;}
 }

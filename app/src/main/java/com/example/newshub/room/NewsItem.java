@@ -1,5 +1,6 @@
 package com.example.newshub.room;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -7,6 +8,7 @@ import androidx.room.PrimaryKey;
 public class NewsItem {
 
     @PrimaryKey
+    @NonNull
     private String url;
     private String title;
 

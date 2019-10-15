@@ -14,8 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.newshub.model.Article;
+import com.example.newshub.room.NewsItem;
 import com.example.newshub.room.NewsViewModel;
 import com.squareup.picasso.Picasso;
+
+import java.util.concurrent.ExecutionException;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -71,9 +74,23 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
+        NewsItem newsItem = new NewsItem(article.getUrl(), article.getTitle());
+
         newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
 
-
+        try {
+            NewsItem queryItem = newsViewModel.queryByUrl(newsItem);
+            if (queryItem != null){
+                Log.d("New Item", "exists");
+            }
+            else {
+                Log.d("News Item", "Does not exist");
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 }
