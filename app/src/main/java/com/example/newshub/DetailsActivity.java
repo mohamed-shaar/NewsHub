@@ -26,8 +26,11 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView tv_details_source;
     private TextView tv_details_content;
     private TextView tv_details_link;
+    private ImageView iv_favorite;
 
     private NewsViewModel newsViewModel;
+
+    private boolean state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +77,9 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
-        NewsItem newsItem = new NewsItem(article.getUrl(), article.getTitle());
+        iv_favorite = findViewById(R.id.iv_favorite);
+
+        final NewsItem newsItem = new NewsItem(article.getUrl(), article.getTitle());
 
         newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
 
@@ -82,15 +87,39 @@ public class DetailsActivity extends AppCompatActivity {
             NewsItem queryItem = newsViewModel.queryByUrl(newsItem);
             if (queryItem != null){
                 Log.d("New Item", "exists");
+                //Picasso.get().load(R.drawable.ic_favorite_black_24dp).fit().into(iv_favorite);
+                iv_favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
+                state = true;
             }
             else {
                 Log.d("News Item", "Does not exist");
+                //Picasso.get().load(R.drawable.ic_favorite_border_black_24dp).fit().into(iv_favorite);
+                iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                state = false;
             }
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        iv_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!state){
+                    newsViewModel.insert(newsItem);
+                    state = true;
+                    //Picasso.get().load(R.drawable.ic_favorite_black_24dp).fit().into(iv_favorite);
+                    iv_favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
+                }
+                else {
+                    newsViewModel.delete(newsItem);
+                    state = false;
+                    //Picasso.get().load(R.drawable.ic_favorite_border_black_24dp).fit().into(iv_favorite);
+                    iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                }
+            }
+        });
 
     }
 }
