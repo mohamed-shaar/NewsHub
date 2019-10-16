@@ -16,6 +16,8 @@
     <string name="to_continue_reading">To continue reading:</string>
     <string name="link_here">Link Here</string>
     <string name="an_image_to_show_if_the_article_is_liked_or_not">An image to show if the article is liked or not</string>
+    <string name="an_image_of_an_x_to_delete_items">An image of an x to delete items.</string>
+    <string name="no_network_message">No network, can not do operation.</string>
     <string-array name="category">
         <item>business</item>
         <item>entertainment</item>
