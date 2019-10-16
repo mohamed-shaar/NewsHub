@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                             selected = new NewsFragment(MainActivity.this);
                             break;
                         case R.id.nav_favorites:
-                            selected = new FavoritesFragment();
+                            selected = new FavoritesFragment(MainActivity.this);
                             break;
                         case R.id.nav_account:
                             selected = new AccountFragment();
