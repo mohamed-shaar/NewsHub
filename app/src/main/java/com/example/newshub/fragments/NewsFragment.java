@@ -113,6 +113,7 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemSelected
                 if (!response.isSuccessful()) {
                     int code = response.code();
                     Log.d("Code: ", String.valueOf(code));
+                    refreshLayout.setRefreshing(false);
                     return;
                 }
                 else {
@@ -133,5 +134,7 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemSelected
                 Log.d("Failure in request: ", t.getMessage());
             }
         });
+
+        refreshLayout.setRefreshing(false);
     }
 }
