@@ -34,6 +34,7 @@
     <string name="invalid_credentials">Invalid credentials.</string>
     <string name="failure">Failure</string>
     <string name="online_backup_deleted">Online backup deleted.</string>
+    <string name="please_connect_to_network">Please connect to a network.</string>
     <string-array name="category">
         <item>business</item>
         <item>entertainment</item>

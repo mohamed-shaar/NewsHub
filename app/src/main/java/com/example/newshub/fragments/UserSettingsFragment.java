@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.newshub.R;
 import com.example.newshub.firebase.Firestore;
+import com.example.newshub.utils.NetworkAvailability;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -76,16 +77,20 @@ public class UserSettingsFragment extends Fragment {
                 Map<String, Object> updates = new HashMap<>();
                 updates.put("links", FieldValue.delete());
 
-                firebaseFirestore
-                        .collection(collectionName)
-                        .document(name)
-                        .update(updates)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(getContext(), getContext().getString(R.string.online_backup_deleted), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                if (getContext() != null){
+                    if (NetworkAvailability.isNetworkAvailable(getContext())){
+                        firebaseFirestore
+                                .collection(collectionName)
+                                .document(name)
+                                .update(updates)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getContext(), getContext().getString(R.string.online_backup_deleted), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                }
             }
         });
 

@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,13 +37,6 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NewsFragment(this)).commit();
-
-        if (NetworkAvailability.isNetworkAvailable(MainActivity.this)){
-            Log.d("Network", "is available");
-        }
-        else {
-            Log.d("Network", "is not available");
-        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -53,12 +47,15 @@ public class MainActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()){
                         case R.id.nav_news:
                             selected = new NewsFragment(MainActivity.this);
+                            NetworkCheck();
                             break;
                         case R.id.nav_favorites:
                             selected = new FavoritesFragment(MainActivity.this);
+                            NetworkCheck();
                             break;
                         case R.id.nav_account:
                             selected = new AccountFragment();
+                            NetworkCheck();
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selected).commit();
@@ -66,11 +63,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
-    @Override
-    protected void onDestroy() {
-        SharedPreferences preferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear().apply();
-        super.onDestroy();
+    private void NetworkCheck(){
+        if (!NetworkAvailability.isNetworkAvailable(MainActivity.this)){
+            Toast.makeText(this, "Network is unavailable.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

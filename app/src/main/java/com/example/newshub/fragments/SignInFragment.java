@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.newshub.R;
 import com.example.newshub.firebase.Analytics;
 import com.example.newshub.firebase.Firestore;
+import com.example.newshub.utils.NetworkAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -85,7 +86,6 @@ public class SignInFragment extends Fragment {
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(et_username.getEditableText().toString())) {
                     username = et_username.getEditableText().toString();
-                    //Toast.makeText(getContext(), username, Toast.LENGTH_SHORT).show();
                     username_present = true;
 
                 } else {
@@ -100,38 +100,45 @@ public class SignInFragment extends Fragment {
                 }
 
                 if (username_present && password_present){
-                    firebaseFirestore
-                            .collection(collectionName)
-                            .document(username)
-                            .get()
-                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    if (documentSnapshot.exists()){
-                                        String queryPassword = documentSnapshot.getString(passwordFieldName);
-                                        if (password.equals(queryPassword)){
-                                            editor.putString(USERNAME, username);
-                                            editor.apply();
-                                            editor.putString(passwordFieldName, password);
-                                            editor.apply();
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString(FirebaseAnalytics.Param.METHOD, username);
-                                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
+                    if (getContext() != null){
+                        if (NetworkAvailability.isNetworkAvailable(getContext())){
+                            firebaseFirestore
+                                    .collection(collectionName)
+                                    .document(username)
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            if (documentSnapshot.exists()){
+                                                String queryPassword = documentSnapshot.getString(passwordFieldName);
+                                                if (password.equals(queryPassword)){
+                                                    editor.putString(USERNAME, username);
+                                                    editor.apply();
+                                                    editor.putString(passwordFieldName, password);
+                                                    editor.apply();
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString(FirebaseAnalytics.Param.METHOD, username);
+                                                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
 
-                                            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserSettingsFragment()).commit();
+                                                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserSettingsFragment()).commit();
+                                                }
+                                                else {
+                                                    Toast.makeText(getContext(), getContext().getString(R.string.invalid_credentials), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
                                         }
-                                        else {
-                                            Toast.makeText(getContext(), getContext().getString(R.string.invalid_credentials), Toast.LENGTH_SHORT).show();
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getContext(), getContext().getString(R.string.failure), Toast.LENGTH_SHORT).show();
                                         }
-                                    }
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(getContext(), getContext().getString(R.string.failure), Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                                    });
+                        }
+                        else {
+                            Toast.makeText(getContext(), getContext().getString(R.string.please_connect_to_network), Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             }
         });
