@@ -13,9 +13,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.newshub.firebase.Analytics;
 import com.example.newshub.model.Article;
 import com.example.newshub.room.NewsItem;
 import com.example.newshub.room.NewsViewModel;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.util.concurrent.ExecutionException;
@@ -30,6 +32,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     private NewsViewModel newsViewModel;
 
+    private FirebaseAnalytics firebaseAnalytics;
     private boolean state;
 
     @Override
@@ -47,6 +50,8 @@ public class DetailsActivity extends AppCompatActivity {
 
         setTitle(article.getTitle());
         iv_details_news = findViewById(R.id.iv_details_news);
+
+        firebaseAnalytics = Analytics.getAnalytics();
 
         if (TextUtils.isEmpty(article.getUrlToImage())){
             Log.d("Details", "Empty Image");
@@ -110,6 +115,9 @@ public class DetailsActivity extends AppCompatActivity {
                     newsViewModel.insert(newsItem);
                     state = true;
                     //Picasso.get().load(R.drawable.ic_favorite_black_24dp).fit().into(iv_favorite);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, newsItem.getUrl());
+                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, bundle);
                     iv_favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
                 }
                 else {

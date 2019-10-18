@@ -28,20 +28,11 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     private ArrayList<NewsItem> newsItems;
     private NewsViewModel newsViewModel;
     private NewsItem newsItem;
-    //private OnItemClickListener mListener;
 
-    /*public interface OnItemClickListener{
-        void onItemClick(int position);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener){
-        mListener = listener;
-    }*/
 
     public FavoritesAdapter(Context context, ArrayList<NewsItem> newsItems) {
         this.context = context;
         this.newsItems = newsItems;
-        //this.newsViewModel = newsViewModel;
     }
 
     @NonNull
@@ -65,8 +56,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
             @Override
             public void onClick(View v) {
                 if (NetworkAvailability.isNetworkAvailable(context)){
-                    //newsViewModel.delete(newsItem);
-                    //notifyDataSetChanged();
                     if (newsItem == null){
                         Log.d("Item", "is null");
                     }
@@ -104,18 +93,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
             tv_favorites_title = itemView.findViewById(R.id.tv_favorites_title);
             tv_favorites_link = itemView.findViewById(R.id.tv_favorites_link);
             iv_favorites_delete = itemView.findViewById(R.id.iv_favorites_delete);
-
-            /*iv_favorites_delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null){
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION){
-                            mListener.onItemClick(position);
-                        }
-                    }
-                }
-            });*/
         }
     }
 }

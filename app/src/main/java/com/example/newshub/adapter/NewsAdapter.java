@@ -45,14 +45,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsItemViewHo
 
         holder.tv_news_title.setText(title);
         holder.tv_news_date.setText(date);
-
-        /*if (imageUrl.equals("null")) {
-            Picasso.get().load(R.drawable.ic_launcher_background).fit().centerCrop().into(holder.iv_news);
-        } else {
-            if (position < articles.size()-1){
-                Picasso.get().load(imageUrl).fit().centerCrop().placeholder(R.drawable.ic_launcher_background).into(holder.iv_news);
-            }
-        }*/
         if (TextUtils.isEmpty(imageUrl)){
             Picasso.get().load(R.drawable.ic_launcher_background).fit().centerCrop().into(holder.iv_news);
         }
