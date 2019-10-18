@@ -83,7 +83,7 @@ public class UserSettingsFragment extends Fragment {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(getContext(), "Online backup deleted.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), getContext().getString(R.string.online_backup_deleted), Toast.LENGTH_SHORT).show();
                             }
                         });
             }

@@ -26,6 +26,14 @@
     <string name="create_account">Create Account</string>
     <string name="log_out">Log Out</string>
     <string name="clear_favorites_backup">Clear Favorites Backup</string>
+    <string name="account_created">Account Created.</string>
+    <string name="username_taken">Username taken.</string>
+    <string name="backup_updated">Backup Updated.</string>
+    <string name="please_enter_username">Please enter your username.</string>
+    <string name="please_enter_password">Please enter your password.</string>
+    <string name="invalid_credentials">Invalid credentials.</string>
+    <string name="failure">Failure</string>
+    <string name="online_backup_deleted">Online backup deleted.</string>
     <string-array name="category">
         <item>business</item>
         <item>entertainment</item>

@@ -87,7 +87,6 @@ public class CreateAccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 extractData();
-                //Log.d("Condition", String.valueOf(checkEmpty()));
                 if (checkEmpty()){
                     if (confirmPassword()){
                         if (checkUsernameExist()){
@@ -99,7 +98,7 @@ public class CreateAccountFragment extends Fragment {
                             .set(passwordPair).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(getContext(), "Account Created.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), getContext().getString(R.string.account_created), Toast.LENGTH_SHORT).show();
                                     editor.putString(USERNAME, username);
                                     editor.putString(passwordFieldName, password);
                                     editor.apply();
@@ -113,7 +112,7 @@ public class CreateAccountFragment extends Fragment {
                             });
                         }
                         else {
-                            Toast.makeText(getContext(), "Username taken.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), getContext().getString(R.string.username_taken), Toast.LENGTH_LONG).show();
                         }
                     }
                 }

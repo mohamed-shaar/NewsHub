@@ -89,14 +89,14 @@ public class SignInFragment extends Fragment {
                     username_present = true;
 
                 } else {
-                    Toast.makeText(getContext(), "Please enter your username.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getContext().getString(R.string.please_enter_username), Toast.LENGTH_SHORT).show();
                 }
 
                 if (!TextUtils.isEmpty(et_password.getEditableText().toString())){
                     password = et_password.getEditableText().toString();
                     password_present = true;
                 } else {
-                    Toast.makeText(getContext(), "Please enter your password.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getContext().getString(R.string.please_enter_password), Toast.LENGTH_SHORT).show();
                 }
 
                 if (username_present && password_present){
@@ -121,7 +121,7 @@ public class SignInFragment extends Fragment {
                                             getFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserSettingsFragment()).commit();
                                         }
                                         else {
-                                            Toast.makeText(getContext(), "Invalid credentials.", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), getContext().getString(R.string.invalid_credentials), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }
@@ -129,7 +129,7 @@ public class SignInFragment extends Fragment {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(getContext(), "Failure", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), getContext().getString(R.string.failure), Toast.LENGTH_SHORT).show();
                                 }
                             });
                 }

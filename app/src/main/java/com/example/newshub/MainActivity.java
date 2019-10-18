@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseAnalytics analytics = Analytics.setUpAnalytics(this);
 
-        //newsTitleApi = Client.getRetrofit().create(NewsTitleApi.class);
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NewsFragment(this)).commit();
@@ -44,33 +42,8 @@ public class MainActivity extends AppCompatActivity {
         else {
             Log.d("Network", "is not available");
         }
-
-        //getResults();
-
     }
 
-    /*private void getResults(){
-        Call<RequestInformation> call = newsTitleApi.getNewsTitles(category, apiKey);
-        call.enqueue(new Callback<RequestInformation>() {
-            @Override
-            public void onResponse(Call<RequestInformation> call, Response<RequestInformation> response) {
-                if (!response.isSuccessful()) {
-                    int code = response.code();
-                    Log.d("Code: ", String.valueOf(code));
-                    return;
-                }
-                else {
-                    RequestInformation requestInformation = response.body();
-                    Log.d("Total", String.valueOf(requestInformation.getTotalResults()));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RequestInformation> call, Throwable t) {
-                Log.d("Failure in request: ", t.getMessage());
-            }
-        });
-    }*/
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override

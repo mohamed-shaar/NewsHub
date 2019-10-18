@@ -129,7 +129,7 @@ public class FavoritesFragment extends Fragment{
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(context, "Backup Updated.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, getContext().getString(R.string.backup_updated), Toast.LENGTH_SHORT).show();
                         }
                     });
         }
