@@ -18,10 +18,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.newshub.R;
+import com.example.newshub.firebase.Analytics;
 import com.example.newshub.firebase.Firestore;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -55,6 +57,7 @@ public class CreateAccountFragment extends Fragment {
 
 
     private FirebaseFirestore firebaseFirestore;
+    private FirebaseAnalytics firebaseAnalytics;
 
 
     public CreateAccountFragment() {
@@ -77,6 +80,7 @@ public class CreateAccountFragment extends Fragment {
         editor = sharedPreferences.edit();
 
         firebaseFirestore = Firestore.getFirestore();
+        firebaseAnalytics = Analytics.getAnalytics();
 
 
         btn_create_account.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +103,10 @@ public class CreateAccountFragment extends Fragment {
                                     editor.putString(USERNAME, username);
                                     editor.putString(passwordFieldName, password);
                                     editor.apply();
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(FirebaseAnalytics.Param.METHOD, username);
+                                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle);
 
                                     getFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserSettingsFragment()).commit();
                                 }

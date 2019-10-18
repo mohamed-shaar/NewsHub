@@ -1,5 +1,6 @@
 package com.example.newshub;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -8,18 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.newshub.api.Client;
-import com.example.newshub.api.NewsTitleApi;
+import com.example.newshub.firebase.Analytics;
 import com.example.newshub.fragments.AccountFragment;
 import com.example.newshub.fragments.FavoritesFragment;
 import com.example.newshub.fragments.NewsFragment;
-import com.example.newshub.model.RequestInformation;
 import com.example.newshub.utils.NetworkAvailability;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import static com.example.newshub.firebase.Firestore.SHARED_PREFS;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseAnalytics analytics = Analytics.setUpAnalytics(this);
 
         //newsTitleApi = Client.getRetrofit().create(NewsTitleApi.class);
 
@@ -92,4 +92,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
+    @Override
+    protected void onDestroy() {
+        SharedPreferences preferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear().apply();
+        super.onDestroy();
+    }
 }

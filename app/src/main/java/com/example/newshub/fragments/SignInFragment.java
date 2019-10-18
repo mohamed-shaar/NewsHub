@@ -18,11 +18,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.newshub.R;
+import com.example.newshub.firebase.Analytics;
 import com.example.newshub.firebase.Firestore;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -54,6 +56,7 @@ public class SignInFragment extends Fragment {
     private SharedPreferences.Editor editor;
 
     private FirebaseFirestore firebaseFirestore;
+    private FirebaseAnalytics firebaseAnalytics;
 
 
     public SignInFragment() {
@@ -75,6 +78,7 @@ public class SignInFragment extends Fragment {
         editor = preferences.edit();
 
         firebaseFirestore = Firestore.getFirestore();
+        firebaseAnalytics = Analytics.getAnalytics();
 
         btn_sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +114,10 @@ public class SignInFragment extends Fragment {
                                             editor.apply();
                                             editor.putString(passwordFieldName, password);
                                             editor.apply();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString(FirebaseAnalytics.Param.METHOD, username);
+                                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
+
                                             getFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserSettingsFragment()).commit();
                                         }
                                         else {
