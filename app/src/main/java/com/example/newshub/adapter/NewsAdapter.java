@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.newshub.DetailsActivity;
 import com.example.newshub.R;
 import com.example.newshub.model.Article;
+import com.example.newshub.utils.DateFormat;
 import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 
@@ -40,7 +41,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsItemViewHo
     @Override
     public void onBindViewHolder(@NonNull NewsItemViewHolder holder, final int position) {
         String title = articles.get(position).getTitle();
-        String date = articles.get(position).getPublishedAt();
+        String date = DateFormat.DateFormat(articles.get(position).getPublishedAt());
         String imageUrl = String.valueOf(articles.get(position).getUrlToImage());
 
         holder.tv_news_title.setText(title);
