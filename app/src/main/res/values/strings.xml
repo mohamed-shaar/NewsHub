@@ -46,4 +46,5 @@
     </string-array>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="open_favorites">open_favorites</string>
 </resources>

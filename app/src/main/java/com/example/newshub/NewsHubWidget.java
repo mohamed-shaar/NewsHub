@@ -17,6 +17,7 @@ public class NewsHubWidget extends AppWidgetProvider {
 
         CharSequence widgetText = context.getString(R.string.favorites);
         Intent intent = new Intent(context, MainActivity.class);
+        intent.setAction(context.getString(R.string.open_favorites));
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.news_hub_widget);

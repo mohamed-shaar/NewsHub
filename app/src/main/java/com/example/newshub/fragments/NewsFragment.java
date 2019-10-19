@@ -134,6 +134,7 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemSelected
             @Override
             public void onFailure(Call<RequestInformation> call, Throwable t) {
                 Log.d("Failure in request: ", t.getMessage());
+                Toast.makeText(getContext(), getContext().getString(R.string.failure), Toast.LENGTH_SHORT).show();
             }
         });
 
