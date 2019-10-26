@@ -1,6 +1,7 @@
 package com.example.newshub;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.newshub.firebase.Analytics;
 import com.example.newshub.model.Article;
@@ -29,6 +31,7 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView tv_details_content;
     private TextView tv_details_link;
     private ImageView iv_favorite;
+    private Toolbar toolbar;
 
     private NewsViewModel newsViewModel;
 
@@ -48,16 +51,24 @@ public class DetailsActivity extends AppCompatActivity {
         Log.d("Details", article.getTitle());
         Log.d("Details", source);
 
-        setTitle(article.getTitle());
+        toolbar = findViewById(R.id.toolbar_details);
+
+        setSupportActionBar(toolbar);
+
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle(article.getTitle());
+
         iv_details_news = findViewById(R.id.iv_details_news);
 
         firebaseAnalytics = Analytics.getAnalytics();
 
-        if (TextUtils.isEmpty(article.getUrlToImage())){
+        if (TextUtils.isEmpty(article.getUrlToImage())) {
             Log.d("Details", "Empty Image");
             Picasso.get().load(R.drawable.ic_launcher_foreground).fit().centerCrop().into(iv_details_news);
-        }
-        else {
+        } else {
             Log.d("Details", "Link to image");
             Picasso.get().load(article.getUrlToImage()).fit().centerCrop().into(iv_details_news);
         }
@@ -90,13 +101,12 @@ public class DetailsActivity extends AppCompatActivity {
 
         try {
             NewsItem queryItem = newsViewModel.queryByUrl(newsItem);
-            if (queryItem != null){
+            if (queryItem != null) {
                 Log.d("New Item", "exists");
                 //Picasso.get().load(R.drawable.ic_favorite_black_24dp).fit().into(iv_favorite);
                 iv_favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
                 state = true;
-            }
-            else {
+            } else {
                 Log.d("News Item", "Does not exist");
                 //Picasso.get().load(R.drawable.ic_favorite_border_black_24dp).fit().into(iv_favorite);
                 iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
@@ -111,7 +121,7 @@ public class DetailsActivity extends AppCompatActivity {
         iv_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!state){
+                if (!state) {
                     newsViewModel.insert(newsItem);
                     state = true;
                     //Picasso.get().load(R.drawable.ic_favorite_black_24dp).fit().into(iv_favorite);
@@ -119,8 +129,7 @@ public class DetailsActivity extends AppCompatActivity {
                     bundle.putString(FirebaseAnalytics.Param.ITEM_ID, newsItem.getUrl());
                     firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, bundle);
                     iv_favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
-                }
-                else {
+                } else {
                     newsViewModel.delete(newsItem);
                     state = false;
                     //Picasso.get().load(R.drawable.ic_favorite_border_black_24dp).fit().into(iv_favorite);

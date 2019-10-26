@@ -11,6 +11,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <include
+            android:id="@+id/toolbar_details"
+            layout="@layout/toolbar" />
+
         <ImageView
             android:id="@+id/iv_details_news"
             android:layout_width="match_parent"
