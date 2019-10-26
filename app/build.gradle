@@ -4,7 +4,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     signingConfigs {
         release {
-            storeFile file("E:\\Projects\\NewsHub\\keystore.jks")
+            storeFile file("../keystore.jks")
             storePassword "keystorepassword"
             keyAlias "key0"
             keyPassword "keypassword"
